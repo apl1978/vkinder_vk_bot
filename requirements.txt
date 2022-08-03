@@ -1,2 +1,7 @@
-requests
-psycopg2-binary
+certifi==2022.6.15
+charset-normalizer==2.1.0
+idna==3.3
+psycopg2-binary==2.9.3
+requests==2.28.1
+urllib3==1.26.11
+vk-api==11.9.9
