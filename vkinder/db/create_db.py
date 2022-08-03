@@ -1,5 +1,7 @@
 import psycopg2
 import configparser
+from psycopg2.extensions import cursor
+from typing import NoReturn
 
 config = configparser.ConfigParser()
 config.read("settings_db.ini")
@@ -11,7 +13,7 @@ USER = config["DB"]["user"]
 PASSWORD = config["DB"]["password"]
 
 
-def delete_db(cursor):
+def delete_db(cursor: cursor) -> NoReturn:
     cursor.execute('''
     DROP TABLE IF EXISTS users CASCADE;
     DROP TABLE IF EXISTS found CASCADE;
@@ -20,7 +22,7 @@ def delete_db(cursor):
     conn.commit()
 
 
-def create_db(cursor):
+def create_db(cursor: cursor) -> NoReturn:
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS users(
         user_id integer PRIMARY KEY);
