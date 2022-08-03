@@ -26,18 +26,18 @@ def create_db(cursor):
         user_id integer PRIMARY KEY);
 
     CREATE TABLE IF NOT EXISTS found(
-        found_id integer PRIMARY KEY,
+        found_id integer,
         user_id integer not null REFERENCES users(user_id),
         first_name varchar(50),
         last_name varchar(50),
         age integer,
         gender varchar(10),
-        city varchar(50));
+        city varchar(50),
+        PRIMARY KEY (user_id, found_id));
         
     CREATE TABLE IF NOT EXISTS favourites(
         user_id integer REFERENCES users(user_id),
-        found_id integer REFERENCES found(found_id),
-        CONSTRAINT pk PRIMARY KEY (user_id, found_id));        
+        found_id integer);        
     ''')
     conn.commit()
 

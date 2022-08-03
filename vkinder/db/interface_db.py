@@ -37,3 +37,20 @@ def insert_new_user(user_id: int):
         sql_str = 'INSERT INTO users (user_id) VALUES (%s)'
         t_params = (user_id,)
         _cursor_execute(sql_str, t_params, True)
+
+
+def is_found_exists(user_id: int, found_id: int):
+    result = None
+    sql_str = 'SELECT found_id FROM found WHERE user_id =%s and found_id =%s'
+    t_params = (user_id, found_id)
+    result = _cursor_execute(sql_str, t_params, False)
+    return result
+
+
+def insert_new_found(user_id: int, found_id: int, first_name: str, last_name: str, age: int, gender: str, city: str):
+    result = is_found_exists(user_id, found_id)
+
+    if result is None:
+        sql_str = 'INSERT INTO found (user_id, found_id, first_name, last_name, age, gender, city) VALUES (%s, %s, %s, %s, %s, %s, %s)'
+        t_params = (user_id, found_id, first_name, last_name, age, gender, city)
+        _cursor_execute(sql_str, t_params, True)
