@@ -49,7 +49,8 @@ def is_found_exists(user_id: int, found_id: int) -> Optional[Tuple]:
     return result
 
 
-def insert_new_found(user_id: int, found_id: int, first_name: str, last_name: str, age: int, gender: str, city: str) -> NoReturn:
+def insert_new_found(user_id: int, found_id: int, first_name: str, last_name: str, age: int, gender: str,
+                     city: str) -> NoReturn:
     result = is_found_exists(user_id, found_id)
 
     if result is None:
