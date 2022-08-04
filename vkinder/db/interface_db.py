@@ -1,13 +1,15 @@
 from typing import NoReturn, Tuple, Optional
-
 import psycopg2
 import configparser
+import os
 
+BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SETTINGS_DIR_NAME = 'db'
+SETTINGS_FILE_NAME = 'settings_db.ini'
+
+file_path = os.path.join(BASE_PATH, SETTINGS_DIR_NAME, SETTINGS_FILE_NAME)
 config = configparser.ConfigParser()
-if __name__ == '__main__':
-    config.read("settings_db.ini")
-else:
-    config.read(".\db\settings_db.ini")
+config.read(file_path)
 
 HOST = config["DB"]["host"]
 PORT = config["DB"]["port"]
