@@ -6,4 +6,4 @@
 ```
 pip install -r requirements.txt
 ```
-1. Добавить токен в файл token_group.py
+4. Добавить токен в файл token_group.py
