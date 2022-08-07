@@ -4,7 +4,7 @@ from psycopg2.extensions import cursor
 from typing import NoReturn
 
 config = configparser.ConfigParser()
-config.read("settings_db.ini")
+config.read("vkinder/db/settings_db.ini")
 
 HOST = config["DB"]["host"]
 PORT = config["DB"]["port"]
@@ -48,7 +48,6 @@ if __name__ == '__main__':
     conn = psycopg2.connect(host=HOST, port=PORT, database=DATABASE, user=USER, password=PASSWORD)
 
     with conn.cursor() as cur:
-
         create_db(cur)
 
     conn.close()
