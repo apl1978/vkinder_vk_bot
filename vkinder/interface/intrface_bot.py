@@ -3,10 +3,11 @@ from vkbottle.bot import Bot, Message
 from vkbottle import Keyboard, KeyboardButtonColor, Text, BaseStateGroup, CtxStorage, PhotoMessageUploader
 import re
 
+from token_set import bot_group_id, bot_token
+
 from vkinder.db.interface_db import insert_new_user
 
-bot_group_id = ''  # ID группы
-bot_token = ''  # Мой токен группы
+
 
 vk = Bot(bot_token, bot_group_id)
 
@@ -70,7 +71,7 @@ async def anceta_name(message: Message):
 
 you_sex = []
 you_age = []
-# you_city = []
+you_city = []
 @vk.on.private_message(state=CreateAnketa.INFO1)
 async def anceta_name(message: Message):
     you_sex.append(message.text)
@@ -156,6 +157,8 @@ async def anceta_name(message: Message):
 # ==========================================================
 @vk.on.private_message(text=['Начать', 'Привет', "a"])
 async def menu(message: Message):
+    print(message.from_id)
+    insert_new_user(message.from_id)
     await message.answer(
         message="Привет, найди себе кого-нибудь🤭",
         keyboard=(
