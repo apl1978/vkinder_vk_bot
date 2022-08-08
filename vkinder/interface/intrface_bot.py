@@ -1,17 +1,17 @@
 #  ================ Frontend Часть ====================
 from vkbottle.bot import Bot, Message
-from vkbottle import Keyboard, KeyboardButtonColor, Text, CtxStorage, PhotoMessageUploader
-from vkbottle import BaseStateGroup
+from vkbottle import Keyboard, KeyboardButtonColor, Text, BaseStateGroup, CtxStorage, PhotoMessageUploader
 import re
 
+from vkinder.db.interface_db import insert_new_user
 
-bot_group_id = '212331614'  # ID группы
-bot_token = '96d12351eebf7a3bb15cd05104365d0a3f1b6b2b397c6472e7a23465f745de58f98880bf2b5f9367c300c'  # Мой токен группы
+bot_group_id = ''  # ID группы
+bot_token = ''  # Мой токен группы
 
 vk = Bot(bot_token, bot_group_id)
 
 # ==========================================================
-# ====================== НАЧАЛО ============================
+# =================== CОЗДАНИЕ АНКЕТЫ ======================
 # ==========================================================
 class CreateAnketa(BaseStateGroup):
     AGE = 0
@@ -20,7 +20,6 @@ class CreateAnketa(BaseStateGroup):
     INFO1 = 3
     INFO2 = 4
     INFO3 = 5
-
 
 @vk.on.private_message(lev=["Начать поиск 🔎"])
 async def create_anket(message: Message):
@@ -94,7 +93,7 @@ async def anceta_name(message: Message):
 async def anceta_name(message: Message):
     city = re.findall(r"[а-яёА-ЯЁ-]", message.text)
     if city == []:
-        await vk.state_dispenser.set(message.peer_id, CreateAnketa.INFO2)
+        await vk.state_dispenser.set(message.peer_id, CreateAnketa.INFO3)
         return f"Ты записал не в том формате\nЗапиши свой город на русском без пробелов и других символов"
     else:
         await message.answer(
@@ -115,8 +114,9 @@ async def anceta_name(message: Message):
     elif message.text == "Посмотреть ⭐":
         """Выводим спок сохраённых людей"""
 
-    elif message.text == "👎" or message.text == "ДА":
+    elif message.text == "👎" or message.text.upper() == "ДА":
         """Показываем следующего человека"""
+
         await message.answer(message="""Имя Фамилия
         ссылка на профиль
         три фотографии в виде attachment(https://dev.vk.com/method/messages.send)""", keyboard=(
@@ -151,10 +151,9 @@ async def anceta_name(message: Message):
         await vk.state_dispenser.set(message.peer_id, CreateAnketa.AGE)
         return "Выбери команду из предложанных"
 
-
-
-
-
+# ==========================================================
+# ====================== ПРИВЕТСТВИЕ =======================
+# ==========================================================
 @vk.on.private_message(text=['Начать', 'Привет', "a"])
 async def menu(message: Message):
     await message.answer(
@@ -164,7 +163,5 @@ async def menu(message: Message):
             .add(Text('Начать поиск 🔎'), color=KeyboardButtonColor.SECONDARY)
         )
     )
-
-
 
 vk.run_forever()
