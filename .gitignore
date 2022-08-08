@@ -1,0 +1,4 @@
+/venv/
+/.idea/
+/pycache/
+settings_db.ini
