@@ -113,7 +113,6 @@ async def anceta_name(message: Message):
         return f"Ты записал не в том формате\nЗапиши свой город на русском без пробелов и других символов"
     else:
         you_city.append(message.text)
-        # search_people()
 
         await message.answer(
             message=f"Вот вся информация о тебе: \nПол: {you_sex[-1]}\nВозраст: {you_age[-1]}\nТвой город: {message.text}",
@@ -136,7 +135,16 @@ async def anceta_name(message: Message):
             return "Ваш список фаворитов пока пуст, добавьте кого-нибудь"
         else:
             for all in a:
-                await message.answer(all)
+                user_photo = await vk.api.users.get(all[0], "photo_id")
+
+                photo_id = user_photo[0].photo_id
+
+                await message.answer(message=f"""Имя Фамилия: {all[2]} {all[3]}
+Ссылка на профиль: vk.com/id{all[0]}
+Город: {all[6]}
+Возраст: {all[4]}""",
+                                     attachment=f"photo{photo_id}")
+
             await vk.state_dispenser.set(message.peer_id, CreateAnketa.SEARCH)
             return "👎-пропустить\n⭐-добавить в избранное"
 
@@ -161,8 +169,8 @@ async def anceta_name(message: Message):
             best_photo(user_name[0].id)
             # ========== Поиск пользователей ============
             await message.answer(message=f"""
-            Имя Фамилия: {user_name[0].first_name} {user_name[0].last_name}
-            Ссылка на профиль: vk.com/id{id_people[0]}""",
+Имя Фамилия: {user_name[0].first_name} {user_name[0].last_name}
+Ссылка на профиль: vk.com/id{id_people[0]}""",
                                  keyboard=(Keyboard(one_time=False, inline=False)
                                            .add(Text('👎'), color=KeyboardButtonColor.NEGATIVE)
                                            .add(Text('⭐'), color=KeyboardButtonColor.POSITIVE)
