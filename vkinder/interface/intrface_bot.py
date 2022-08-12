@@ -143,7 +143,7 @@ async def anceta_name(message: Message):
 Ссылка на профиль: vk.com/id{all[0]}
 Город: {all[6]}
 Возраст: {all[4]}""",
-                                     attachment=f"photo{photo_id}")
+                    attachment=f"photo{photo_id}")
 
             await vk.state_dispenser.set(message.peer_id, CreateAnketa.SEARCH)
             return "👎-пропустить\n⭐-добавить в избранное"
@@ -155,7 +155,10 @@ async def anceta_name(message: Message):
             user_sex = await vk.api.users.get(id_people[0], "sex")
             user_city = await vk.api.users.get(id_people[0], "city")
 
-            people_age = int(calc_age(parse_date(f"{user_age[0].bdate}", fmt='%d.%m.%Y')))
+            if len(user_age[0].bdate) >= 8:
+                people_age = int(calc_age(parse_date(f"{user_age[0].bdate}", fmt='%d.%m.%Y')))
+            else:
+                people_age = 0
 
             if user_city[0].city is None:
                 insert_new_found(message.from_id, id_people[0], user_name[0].first_name, user_name[0].last_name,
@@ -171,11 +174,11 @@ async def anceta_name(message: Message):
             await message.answer(message=f"""
 Имя Фамилия: {user_name[0].first_name} {user_name[0].last_name}
 Ссылка на профиль: vk.com/id{id_people[0]}""",
-                                 keyboard=(Keyboard(one_time=False, inline=False)
-                                           .add(Text('👎'), color=KeyboardButtonColor.NEGATIVE)
-                                           .add(Text('⭐'), color=KeyboardButtonColor.POSITIVE)
-                                           .row()
-                                           .add(Text('Посмотреть ⭐'), color=KeyboardButtonColor.POSITIVE)))
+                 keyboard=(Keyboard(one_time=False, inline=False)
+                           .add(Text('👎'), color=KeyboardButtonColor.NEGATIVE)
+                           .add(Text('⭐'), color=KeyboardButtonColor.POSITIVE)
+                           .row()
+                           .add(Text('Посмотреть ⭐'), color=KeyboardButtonColor.POSITIVE)))
             for id_photo in bp[0]:
                 await message.answer(attachment=f"photo{user_name[0].id}_{id_photo}")
             await vk.state_dispenser.set(message.peer_id, CreateAnketa.SEARCH)
