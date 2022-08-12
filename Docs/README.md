@@ -20,5 +20,13 @@
 
 ### Настройка бота VKinder
 
-1. Переименовать файл \db\settings_db_example.ini в \db\settings_db.ini и прописать в нем параметры подключения к базе данных.
-1. Создать базу данных - запустить файл \db\create_db.py.
+1. Установить библиотеки из файла requirements.txt командой
+```
+pip install -r requirements.txt
+```
+2. Переименовать файл \db\settings_db_example.ini в \db\settings_db.ini и прописать в нем параметры подключения к базе данных.
+3. Создать базу данных - запустить файл \db\create_db.py.
+4. Переименовать файл \interface\token_set_example.py в \interface\token_set.py и прописать в нем ID и токен группы, от имени которой общается бот.
+
+### Схема базы данных
+![scheme VKinder.drawio.png](scheme VKinder.drawio.png?raw=true "Схема базы данных")
