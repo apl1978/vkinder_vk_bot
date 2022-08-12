@@ -27,7 +27,7 @@ pip install -r requirements.txt
 2. Переименовать файл \db\settings_db_example.ini в \db\settings_db.ini и прописать в нем параметры подключения к базе данных.
 3. Создать базу данных - запустить файл \db\create_db.py.
 4. Переименовать файл \interface\token_set_example.py в \interface\token_set.py и прописать в нем ID и токен группы, от имени которой общается бот.
-5. Запустить файл 
+5. Для старта бота запустить файл intrface_bot. 
 
 ### Схема базы данных
 ![scheme VKinder.drawio.png](scheme%20VKinder.drawio.png?raw=true "Схема базы данных")
